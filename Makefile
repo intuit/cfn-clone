@@ -1,6 +1,5 @@
 basedir = $(shell pwd)
 gopath = "$(basedir)/vendor:$(GOPATH)"
-cover = $(COVER)
 
 .PNONY: all test deps fmt clean check-gopath
 
@@ -14,7 +13,7 @@ race: check-gopath clean fmt deps test
 
 test: check-gopath
 	@echo "==> Running tests."
-	@env GOPATH=$(gopath) go test $(cover) ./cfn-clone
+	@env GOPATH=$(gopath) go test -cover ./cfn-clone
 
 deps: check-gopath
 	@echo "==> Downloading dependencies."
