@@ -131,7 +131,7 @@ func stackTemplateCmd(name string) []string {
 	}
 }
 
-func sourceStackTemplate(name string) (string, error) {
+func stackTemplate(name string) (string, error) {
 	templateCmd := stackTemplateCmd(name)
 
 	cmd := exec.Command(templateCmd[0], templateCmd[1:]...)
@@ -156,7 +156,7 @@ func sourceStackTemplate(name string) (string, error) {
 
 func template(sourceStack string, path string) (string, error) {
 	if path == "" {
-		return sourceStackTemplate(sourceStack)
+		return stackTemplate(sourceStack)
 	} else {
 		t, err := ioutil.ReadFile(path)
 		if err != nil {

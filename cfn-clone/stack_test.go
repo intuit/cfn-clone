@@ -1,6 +1,8 @@
 package main
 
 import (
+	"io/ioutil"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -70,5 +72,26 @@ func TestStackTemplateCmd(t *testing.T) {
 
 	if !reflect.DeepEqual(cmd, expected) {
 		t.Fatalf("Expected '%s' got '%s'", expected, cmd)
+	}
+}
+
+func TestTemplate(t *testing.T) {
+	s := `{"foo": "bar"}`
+	f, err := ioutil.TempFile("", "cfn-clone-test")
+	if err != nil {
+		t.Fatalf("Unable to create temp file for testing ValidateTemplateExists")
+	}
+
+	defer os.Remove(f.Name())
+	defer f.Close()
+
+	f.WriteString(s)
+	f.Sync()
+	f.Close()
+
+	data, _ := template("", f.Name())
+
+	if data != s {
+		t.Fatalf("Expected '%s' got '%s'", s, data)
 	}
 }
