@@ -24,16 +24,16 @@ cfn-clone -s source-stack-name -n new-stack-name -a FOO=BAR
 
 ### Override Template
 
-You have the ability to overrid the template for the new stack.
+You have the ability to override the template for the new stack.
 ```sh
 cfn-clone -s source-stack-name -n new-stack-name -t ./new_template.json
 ```
 
 ### Config
 
-cfn-clone will pass through the relevant AWS related environment variables to the aws cli.
+You can use the normal aws cli environment variables for controlling credentials, etc. When cfn-clone invokes the aws cli, these will be made available.
 
-These are:
+Examples:
 
 * `AWS_DEFAULT_PROFILE`
 * `AWS_DEFAULT_REGION`

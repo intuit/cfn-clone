@@ -25,7 +25,6 @@ func paramsFromCli(attribs []string) map[string]string {
 	return parameters
 }
 
-
 func parseCliArgs() *options {
 	opts := &options{}
 	parser := flags.NewParser(opts, flags.Default)
