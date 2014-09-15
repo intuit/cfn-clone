@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	flags "github.com/jessevdk/go-flags"
 )
@@ -13,6 +14,17 @@ type options struct {
 	SourceName string   `short:"s" long:"source-name" description:"Name of source stack to clone" required:"true"`
 	Template   string   `short:"t" long:"template" description:"Path to a new template file"`
 }
+
+func paramsFromCli(attribs []string) map[string]string {
+	parameters := map[string]string{}
+	for _, a := range attribs {
+		p := strings.SplitN(a, "=", 2)
+		parameters[p[0]] = p[1]
+	}
+
+	return parameters
+}
+
 
 func parseCliArgs() *options {
 	opts := &options{}

@@ -31,7 +31,7 @@ func createStackCmd(name string, params map[string]string, template string) []st
 		"--parameters",
 	}
 
-	return append(cmd, paramsForCreate(params)...)
+	return append(cmd, cliParamsForCreate(params)...)
 }
 
 func createStack(name string, params map[string]string, template string) (string, error) {
@@ -78,7 +78,7 @@ func newStackTemplateFile(sourceStack string, path string) (string, error) {
 	return f.Name(), nil
 }
 
-func paramsForCreate(params map[string]string) []string {
+func cliParamsForCreate(params map[string]string) []string {
 	p := []string{}
 	for k, v := range params {
 		p = append(p, "ParameterKey="+k+",ParameterValue="+v)

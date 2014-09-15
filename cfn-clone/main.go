@@ -3,18 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 )
-
-func cliParameters(attribs []string) map[string]string {
-	parameters := map[string]string{}
-	for _, a := range attribs {
-		p := strings.SplitN(a, "=", 2)
-		parameters[p[0]] = p[1]
-	}
-
-	return parameters
-}
 
 func main() {
 	options := parseCliArgs()
@@ -32,7 +21,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	for k, v := range cliParameters(options.Attributes) {
+	for k, v := range paramsFromCli(options.Attributes) {
 		parameters[k] = v
 	}
 
