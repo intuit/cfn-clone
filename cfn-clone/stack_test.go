@@ -7,6 +7,19 @@ import (
 	"testing"
 )
 
+func TestCliParamsForCreate(t *testing.T) {
+	expected := []string{
+		"ParameterKey=foo,ParameterValue=bar",
+		"ParameterKey=bar,ParameterValue=baz",
+		}
+	params := map[string]string{"foo": "bar", "bar": "baz"}
+	result := cliParamsForCreate(params)
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Fatalf("Expected '%v' got '%v'", expected, result)
+	}
+}
+
 func TestCreateStackCmd(t *testing.T) {
 	name := "foo"
 	params := map[string]string{"param1": "val1", "param2": "val2"}
