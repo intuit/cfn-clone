@@ -2,6 +2,10 @@
 
 This tool allows you to clone a CloudFormation stack.
 
+## Installation
+
+Just grab the [latest binary](https://github.com/thbishop/mmfa/releases/latest) and you should be good to go.
+
 ## Requirements
 
 * [aws cli](http://aws.amazon.com/cli/) installed and in your PATH
