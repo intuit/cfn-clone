@@ -13,6 +13,7 @@ type options struct {
 	NewName    string   `short:"n" long:"new-name" description:"Name for new stack" required:"true"`
 	SourceName string   `short:"s" long:"source-name" description:"Name of source stack to clone" required:"true"`
 	Template   string   `short:"t" long:"template" description:"Path to a new template file"`
+	Version    func()   `short:"v" long:"version" description:"Display the version of cfn-clone"`
 }
 
 func paramsFromCli(attribs []string) map[string]string {
@@ -27,6 +28,12 @@ func paramsFromCli(attribs []string) map[string]string {
 
 func parseCliArgs() *options {
 	opts := &options{}
+
+	opts.Version = func() {
+		fmt.Println(version)
+		os.Exit(0)
+	}
+
 	parser := flags.NewParser(opts, flags.Default)
 
 	_, err := parser.Parse()

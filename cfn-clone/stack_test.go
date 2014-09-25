@@ -11,7 +11,7 @@ func TestCliParamsForCreate(t *testing.T) {
 	expected := []string{
 		"ParameterKey=foo,ParameterValue=bar",
 		"ParameterKey=bar,ParameterValue=baz",
-		}
+	}
 	params := map[string]string{"foo": "bar", "bar": "baz"}
 	result := cliParamsForCreate(params)
 

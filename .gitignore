@@ -9,6 +9,8 @@ _test
 /bin
 bin/*
 bin
+pkg/*
+pkg
 
 # Architecture specific extensions/prefixes
 *.[568vq]
