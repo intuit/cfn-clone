@@ -7,11 +7,9 @@ PROJECT_ROOT="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 PKG_ROOT="$PROJECT_ROOT/pkg"
 BIN_NAME="cfn-clone"
 
-if [ -d "$PKG_ROOT" ]; then
-    echo -n "Removing existing binaries..."
-    rm -fr $PKG_ROOT
-    echo "Done"
-fi
+echo -n "Removing existing binaries..."
+rm -fr $PKG_ROOT
+echo "Done"
 
 mkdir -p $PKG_ROOT
 
