@@ -4,7 +4,7 @@ This tool allows you to clone a CloudFormation stack.
 
 ## Installation
 
-Just grab the [latest binary](https://github.com/thbishop/mmfa/releases/latest) and you should be good to go.
+Just grab the [latest binary](https://github.com/intuit/cfn-clone/releases/latest) and you should be good to go.
 
 ## Requirements
 
