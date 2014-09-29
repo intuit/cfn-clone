@@ -28,7 +28,7 @@ func createStackCmd(name string, params map[string]string, template string) ([]s
 		name,
 		"--template-body",
 		"file:///" + template,
-		"--capabilities \"CAPABILITY_IAM\"",
+		"--capabilities", "CAPABILITY_IAM",
 		"--parameters",
 	}
 
