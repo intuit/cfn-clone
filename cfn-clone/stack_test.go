@@ -33,12 +33,13 @@ func TestCreateStackCmd(t *testing.T) {
 		name,
 		"--template-body",
 		"file:///" + template,
+		"--capabilities \"CAPABILITY_IAM\"",
 		"--parameters",
 		"ParameterKey=param1,ParameterValue=\"val1\\,valx\"",
 		"ParameterKey=param2,ParameterValue=\"val2\\,valy\"",
 	}
 
-	cmd := createStackCmd(name, params, template)
+	cmd, _ := createStackCmd(name, params, template)
 
 	// because order of maps are not guaranteed
 	if !reflect.DeepEqual(cmd[:8], expected[:8]) {

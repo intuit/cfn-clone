@@ -29,7 +29,12 @@ func main() {
 
 	fmt.Println("Going to clone")
 
-	createStack(options.NewName, parameters, newTemplate)
+	output, err := createStack(options.NewName, parameters, newTemplate)
+	if err != nil {
+		fmt.Printf("Received error '%s' with output '%s'.\n", err.Error(), output)
+		os.Exit(1)
+	}
 
+	fmt.Printf("Success with output '%s'.\n", output)
 	os.Exit(0)
 }
