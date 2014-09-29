@@ -81,7 +81,9 @@ func newStackTemplateFile(sourceStack string, path string) (string, error) {
 func cliParamsForCreate(params map[string]string) []string {
 	p := []string{}
 	for k, v := range params {
-		p = append(p, "ParameterKey="+k+",ParameterValue="+v)
+		escapedK := strings.Replace(k, ",", "\\,", -1)
+		escapedV := strings.Replace(v, ",", "\\,", -1)
+		p = append(p, "ParameterKey="+escapedK+",ParameterValue=\""+escapedV+"\"")
 	}
 
 	return p

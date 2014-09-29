@@ -9,10 +9,10 @@ import (
 
 func TestCliParamsForCreate(t *testing.T) {
 	expected := []string{
-		"ParameterKey=foo,ParameterValue=bar",
-		"ParameterKey=bar,ParameterValue=baz",
-		}
-	params := map[string]string{"foo": "bar", "bar": "baz"}
+		"ParameterKey=foo,ParameterValue=\"bar\\,1\"",
+		"ParameterKey=bar,ParameterValue=\"2\\,baz\"",
+	}
+	params := map[string]string{"foo": "bar,1", "bar": "2,baz"}
 	result := cliParamsForCreate(params)
 
 	if !reflect.DeepEqual(result, expected) {
@@ -22,7 +22,7 @@ func TestCliParamsForCreate(t *testing.T) {
 
 func TestCreateStackCmd(t *testing.T) {
 	name := "foo"
-	params := map[string]string{"param1": "val1", "param2": "val2"}
+	params := map[string]string{"param1": "val1,valx", "param2": "val2,valy"}
 	template := "/var/tmp/new_template.json"
 
 	expected := []string{
@@ -34,8 +34,8 @@ func TestCreateStackCmd(t *testing.T) {
 		"--template-body",
 		"file:///" + template,
 		"--parameters",
-		"ParameterKey=param1,ParameterValue=val1",
-		"ParameterKey=param2,ParameterValue=val2",
+		"ParameterKey=param1,ParameterValue=\"val1\\,valx\"",
+		"ParameterKey=param2,ParameterValue=\"val2\\,valy\"",
 	}
 
 	cmd := createStackCmd(name, params, template)
