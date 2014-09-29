@@ -19,7 +19,7 @@ type describeStackResponse struct {
 	}
 }
 
-func createStackCmd(name string, params map[string]string, template string) []string {
+func createStackCmd(name string, params map[string]string, template string) ([]string, error) {
 	cmd := []string{
 		"aws",
 		"cloudformation",
@@ -28,14 +28,22 @@ func createStackCmd(name string, params map[string]string, template string) []st
 		name,
 		"--template-body",
 		"file:///" + template,
+		"--capabilities", "CAPABILITY_IAM",
 		"--parameters",
 	}
 
-	return append(cmd, cliParamsForCreate(params)...)
+	if err := noEchoParamsOverriden(params); err != nil {
+		return []string{}, err
+	}
+
+	return append(cmd, cliParamsForCreate(params)...), nil
 }
 
 func createStack(name string, params map[string]string, template string) (string, error) {
-	createCmd := createStackCmd(name, params, template)
+	createCmd, err := createStackCmd(name, params, template)
+	if err != nil {
+		return "", err
+	}
 
 	fmt.Println("Going to run with command:")
 	fmt.Printf("%s\n", strings.Join(createCmd, " "))
@@ -78,10 +86,21 @@ func newStackTemplateFile(sourceStack string, path string) (string, error) {
 	return f.Name(), nil
 }
 
+func noEchoParamsOverriden(params map[string]string) error {
+	for k, v := range params {
+		if v == "****" {
+			return fmt.Errorf("NoEcho Paramater '%s' must have overrid value specified.", k)
+		}
+	}
+	return nil
+}
+
 func cliParamsForCreate(params map[string]string) []string {
 	p := []string{}
 	for k, v := range params {
-		p = append(p, "ParameterKey="+k+",ParameterValue="+v)
+		escapedK := strings.Replace(k, ",", "\\,", -1)
+		escapedV := strings.Replace(v, ",", "\\,", -1)
+		p = append(p, "ParameterKey="+escapedK+",ParameterValue=\""+escapedV+"\"")
 	}
 
 	return p
