@@ -1,9 +1,33 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"os"
+	"sort"
+	"text/tabwriter"
 )
+
+func prettyParameters(params map[string]string) string {
+	var b bytes.Buffer
+	if len(params) > 0 {
+		w := new(tabwriter.Writer)
+		w.Init(&b, 0, 8, 0, '\t', 0)
+
+		keys := []string{}
+		for k := range params {
+			keys = append(keys, k)
+		}
+		sort.Strings(keys)
+
+		b.Write([]byte("The merged parameters are:\n"))
+		for _, k := range keys {
+			fmt.Fprintf(w, "%s \t%s\n", k, params[k])
+		}
+		w.Flush()
+	}
+	return b.String()
+}
 
 func main() {
 	options := parseCliArgs()
@@ -25,7 +49,7 @@ func main() {
 		parameters[k] = v
 	}
 
-	fmt.Printf("Our merged parameters are %v\n", parameters)
+	fmt.Println(prettyParameters(parameters))
 
 	fmt.Println("Going to clone")
 
