@@ -1,5 +1,6 @@
 ## head
 
+* Pretty print merged parameters
 * Added IAM_CAPABILITY to create
 * Print output
 * Update parameter paring
