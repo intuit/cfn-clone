@@ -29,6 +29,8 @@ func TestCreateStackCmd(t *testing.T) {
 		"aws",
 		"cloudformation",
 		"create-stack",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 		"--template-body",
@@ -61,6 +63,8 @@ func TestStackParamsCmd(t *testing.T) {
 		"aws",
 		"cloudformation",
 		"describe-stacks",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 	}
@@ -79,6 +83,8 @@ func TestStackTemplateCmd(t *testing.T) {
 		"aws",
 		"cloudformation",
 		"get-template",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 	}
