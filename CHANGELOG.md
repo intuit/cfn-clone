@@ -1,5 +1,6 @@
 ## head
 
+* Capture and outpu stdout and stderr for all internal commands
 * Added IAM_CAPABILITY to create
 * Print output
 * Update parameter paring
