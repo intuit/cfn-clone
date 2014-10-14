@@ -4,7 +4,13 @@ This tool allows you to clone a CloudFormation stack.
 
 ## Installation
 
-Just grab the [latest binary](https://github.com/intuit/cfn-clone/releases/latest) and you should be good to go.
+Grab the [latest binary](https://github.com/intuit/cfn-clone/releases/latest) and you should be good to go.
+
+If you're on OSX, you can install with homebrew:
+```sh
+brew tap intuit/cfn-clone
+brew install cfn-clone
+```
 
 ## Requirements
 
