@@ -34,14 +34,14 @@ func main() {
 
 	newTemplate, err := newStackTemplateFile(options.SourceName, options.Template)
 	if err != nil {
-		fmt.Printf("Erroring getting the template for cloning. Error: %v", err)
+		fmt.Printf("Erroring getting the template for cloning. %s\n", err.Error())
 		os.Exit(1)
 	}
 	defer os.Remove(newTemplate)
 
 	parameters, err := stackParameters(options.SourceName)
 	if err != nil {
-		fmt.Printf("Error getting source stack parameters. Error: %v", err)
+		fmt.Printf("Error getting source stack parameters. %s\n", err.Error())
 		os.Exit(1)
 	}
 
@@ -55,7 +55,7 @@ func main() {
 
 	output, err := createStack(options.NewName, parameters, newTemplate)
 	if err != nil {
-		fmt.Printf("Received error '%s' with output '%s'.\n", err.Error(), output)
+		fmt.Printf("Unable to create new stack. %s\n", err.Error())
 		os.Exit(1)
 	}
 

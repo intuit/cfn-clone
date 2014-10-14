@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"os/exec"
 	"strings"
 )
@@ -24,6 +23,8 @@ func createStackCmd(name string, params map[string]string, template string) ([]s
 		"aws",
 		"cloudformation",
 		"create-stack",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 		"--template-body",
@@ -52,7 +53,8 @@ func createStack(name string, params map[string]string, template string) (string
 
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return "", errors.New(string(output))
+		errMsg := fmt.Sprintf("Error: '%s'. Output: '%s'", err.Error(), string(output))
+		return "", errors.New(errMsg)
 	}
 
 	return string(output), nil
@@ -111,6 +113,8 @@ func stackParametersCmd(stack string) []string {
 		"aws",
 		"cloudformation",
 		"describe-stacks",
+		"--output",
+		"json",
 		"--stack-name",
 		stack,
 	}
@@ -121,10 +125,10 @@ func stackParameters(stack string) (map[string]string, error) {
 
 	cmd := exec.Command(paramsCmd[0], paramsCmd[1:]...)
 
-	output, err := cmd.Output()
+	output, err := cmd.CombinedOutput()
 	if err != nil {
-		fmt.Printf("Error getting attributes from source stack. Error: %s", string(output))
-		os.Exit(1)
+		errMsg := fmt.Sprintf("Error: '%s'. Output: '%s'", err.Error(), string(output))
+		return map[string]string{}, errors.New(errMsg)
 	}
 
 	j := describeStackResponse{}
@@ -145,6 +149,8 @@ func stackTemplateCmd(name string) []string {
 		"aws",
 		"cloudformation",
 		"get-template",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 	}
@@ -155,9 +161,10 @@ func stackTemplate(name string) (string, error) {
 
 	cmd := exec.Command(templateCmd[0], templateCmd[1:]...)
 
-	output, err := cmd.Output()
+	output, err := cmd.CombinedOutput()
 	if err != nil {
-		return "", err
+		errMsg := fmt.Sprintf("Error: '%s'. Output: '%s'", err.Error(), string(output))
+		return "", errors.New(errMsg)
 	}
 
 	j := map[string]interface{}{}
@@ -179,7 +186,8 @@ func template(sourceStack string, path string) (string, error) {
 	} else {
 		t, err := ioutil.ReadFile(path)
 		if err != nil {
-			fmt.Printf("Unable to read template file. Error: %v", err)
+			errMsg := fmt.Sprintf("Error: '%s'", err.Error())
+			return "", errors.New(errMsg)
 		}
 		return string(t), nil
 	}
