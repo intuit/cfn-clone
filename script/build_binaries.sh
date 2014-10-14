@@ -18,11 +18,13 @@ version=$(grep version $BIN_NAME/version.go  | awk '{print $4}' | sed 's/"//g')
 echo "Building packages for distribution for version $version."
 
 for os in ${OS_TYPES[*]}; do
-    FILE_NAME="$BIN_NAME-$version-$os-amd64"
+    pkg_name="$BIN_NAME-$version-$os-amd64"
+    pkg_path="$PKG_ROOT/$pkg_name"
     echo -n "Building packages for $os/amd64..."
-    env GOOS=$os GOARCH=amd64 go build -o $PKG_ROOT/$FILE_NAME ./$BIN_NAME
+    env GOOS=$os GOARCH=amd64 go build -o $pkg_path/$BIN_NAME ./$BIN_NAME
     cd $PKG_ROOT
-    shasum --algorithm 256 --binary $FILE_NAME >> $version-sha256-sums
+    tar zcf $pkg_name.tar.gz -C $pkg_path $BIN_NAME
+    shasum --algorithm 256 --binary $pkg_name.tar.gz >> $version-sha256-sums
     cd $PROJECT_ROOT
     echo "Done"
 done
