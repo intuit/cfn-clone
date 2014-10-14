@@ -23,6 +23,8 @@ func createStackCmd(name string, params map[string]string, template string) ([]s
 		"aws",
 		"cloudformation",
 		"create-stack",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 		"--template-body",
@@ -111,6 +113,8 @@ func stackParametersCmd(stack string) []string {
 		"aws",
 		"cloudformation",
 		"describe-stacks",
+		"--output",
+		"json",
 		"--stack-name",
 		stack,
 	}
@@ -145,6 +149,8 @@ func stackTemplateCmd(name string) []string {
 		"aws",
 		"cloudformation",
 		"get-template",
+		"--output",
+		"json",
 		"--stack-name",
 		name,
 	}
