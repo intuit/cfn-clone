@@ -1,5 +1,7 @@
 ## head
 
+* bug fix when displaying help
+
 ## 1.0.1 (10/14/2014)
 
 * Pretty print merged parameters
