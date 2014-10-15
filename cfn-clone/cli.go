@@ -36,9 +36,20 @@ func parseCliArgs() *options {
 
 	parser := flags.NewParser(opts, flags.Default)
 
-	_, err := parser.Parse()
+	args, err := parser.Parse()
 	if err != nil {
-		parser.WriteHelp(os.Stderr)
+		helpDisplayed := false
+
+		for _, i := range args {
+			if i == "-h" || i == "--help" {
+				helpDisplayed = true
+				break
+			}
+		}
+
+		if !helpDisplayed {
+			parser.WriteHelp(os.Stderr)
+		}
 		os.Exit(1)
 	}
 
